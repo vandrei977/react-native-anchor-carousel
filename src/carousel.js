@@ -39,6 +39,8 @@ function Carousel(props, ref) {
     inActiveOpacity = 0.8,
     inverted = false,
     initialIndex = 0,
+    leftMarginOffset = 0,
+    rightMarginOffset = 0,
     bounces = true,
     showsHorizontalScrollIndicator = false,
     keyExtractor = (item, index) => index.toString(),
@@ -141,7 +143,7 @@ function Carousel(props, ref) {
 
   function getItemOffset(index) {
     return (
-      index * (itemWidth + itemTotalMarginBothSide) -
+      index * (itemWidth + itemTotalMarginBothSide)+50 -
       (halfContainerWidth - halfItemWidth)
     );
   }
@@ -169,7 +171,7 @@ function Carousel(props, ref) {
     }
     if (isLastItem(index)) {
       return (
-        (dataLength - 2) * (itemWidth + itemTotalMarginBothSide) +
+        (dataLength - 2) * (itemWidth + itemTotalMarginBothSide ) +
         halfItemWidth -
         halfContainerWidth
       );
@@ -180,7 +182,7 @@ function Carousel(props, ref) {
   function getEndPointInterpolate(index, midPoint) {
     if (isFirstItem(index)) {
       return (
-        itemWidth + itemTotalMarginBothSide + halfItemWidth - halfContainerWidth
+        itemWidth + itemTotalMarginBothSide  + halfItemWidth - halfContainerWidth
       );
     }
     if (index === dataLength - 2) {
@@ -220,14 +222,10 @@ function Carousel(props, ref) {
   function getItemMarginStyle(index) {
     const marginSingleItemSide = itemTotalMarginBothSide / 2;
     if (isFirstItem(index)) {
-      return !!inverted
-        ? { marginLeft: marginSingleItemSide }
-        : { marginRight: marginSingleItemSide };
+     return {marginLeft: itemTotalMarginBothSide + leftMarginOffset, marginRight: marginSingleItemSide}
     }
     if (isLastItem(index)) {
-      return !!inverted
-        ? { marginRight: marginSingleItemSide }
-        : { marginLeft: marginSingleItemSide };
+      return {marginLeft: marginSingleItemSide, marginRight: itemTotalMarginBothSide + rightMarginOffset}
     }
     return { marginHorizontal: marginSingleItemSide };
   }
